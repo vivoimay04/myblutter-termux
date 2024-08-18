@@ -888,7 +888,16 @@ std::string DartDumper::getPoolObjectDescription(intptr_t offset, bool simpleFor
 	else if (objType == dart::ObjectPool::EntryType::kNativeFunction) {
 		auto pc = pool.RawValueAt(idx);
 		uintptr_t start = 0;
-		char* name = dart::NativeSymbolResolver::LookupSymbolName(pc, &start);
+		//char* name = dart::NativeSymbolResolver::LookupSymbolName(pc, &start);
+		
+		// bellow codes are fixed by Rajesh
+		#ifdef NEED_CONST
+        const char* name = dart::NativeSymbolResolver::LookupSymbolName(pc, &start);
+        #else
+        char* name = dart::NativeSymbolResolver::LookupSymbolName(pc, &start);
+        #endif
+        // end of fixed code by Rajesh
+        
 		if (name != NULL) {
 			auto txt = fmt::format("[pp+{:#x}] NativeFn: {} at {:#x}", offset, name, pc);
 			dart::NativeSymbolResolver::FreeSymbolName(name);

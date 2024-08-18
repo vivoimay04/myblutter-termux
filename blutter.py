@@ -94,6 +94,10 @@ def find_compat_macro(dart_version: str, no_analysis: bool):
     macros = []
     include_path = os.path.join(PKG_INC_DIR, f"dartvm{dart_version}")
     vm_path = os.path.join(include_path, "vm")
+    # added fixed code by Rajesh
+    if dart_version >= "3.5.0":
+        macros.append("-DNEED_CONST=1")
+    # end of fixed code by Rajesh
     with open(os.path.join(vm_path, "class_id.h"), "rb") as f:
         mm = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
         # Rename the default implementation classes of Map and Set https://github.com/dart-lang/sdk/commit/a2de36e708b8a8e15d3bd49eef2cede57e649436
