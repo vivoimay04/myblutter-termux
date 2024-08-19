@@ -334,7 +334,8 @@ def run_command(command):
     else:
         return output.decode("utf-8")
 
-
+# disable check update script ;(
+"""
 def check_for_updates_and_pull():
     # Fetch the latest data from the remote repository
     run_command("git fetch")
@@ -353,7 +354,7 @@ def check_for_updates_and_pull():
 
         # Replace 'std::format' with 'fmt::format' in all files
         run_command("find -type f -exec sed -i 's/std::format/fmt::format/g' {} +")
-
+"""
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -391,7 +392,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Check for updates and pull them if necessary
-    check_for_updates_and_pull()
+    # check_for_updates_and_pull()
 
     if args.dart_version is None:
         main(args.indir, args.outdir, args.rebuild, args.vs_sln, args.no_analysis)
